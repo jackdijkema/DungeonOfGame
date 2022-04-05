@@ -54,6 +54,7 @@ public class Game extends GameApplication {
     }
 
     private Entity player;
+    private Entity enemy;
 
     @Override
     protected void initGame() {
@@ -70,16 +71,39 @@ public class Game extends GameApplication {
                 .viewWithBBox(new Rectangle(40, 600, Color.BROWN))
                 .with(new CollidableComponent(true))
                 .buildAndAttach();
+
+        enemy = entityBuilder()
+                .type(EntityType.ENEMY)
+                .at(300, 300)
+                .viewWithBBox(new Rectangle(30, 30, Color.BLUE))
+                .with(new CollidableComponent(true))
+                .buildAndAttach();
     }
 
     @Override
     protected void initPhysics() {
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.WALL) {
 
-            // order of types is the same as passed into the constructor
+            // order of types is the same as passed into the constructord
             @Override
             protected void onCollisionBegin(Entity player, Entity wall) {
                 player.translate(-10,0);
+            }
+        });
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
+            @Override
+            protected void onCollisionBegin(Entity enemy, Entity wall) {
+                enemy.translate(-10,0);
+            }
+        });
+
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.ENEMY) {
+            @Override
+            protected void onCollisionBegin(Entity player, Entity enemy) {
+                player.translate(-10,0);
+                enemy.translate(10,0);
+
+
             }
         });
     }

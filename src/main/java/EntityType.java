@@ -1,4 +1,4 @@
 
 public enum EntityType {
-    PLAYER, WALL
+    PLAYER, WALL, ENEMY
 }
