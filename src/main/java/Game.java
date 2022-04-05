@@ -25,6 +25,8 @@ public class Game extends GameApplication {
                 .at(400, 400)
                 .view(new Rectangle(30, 30, Color.RED))
                 .buildAndAttach();
+
+        FXGL.getGameScene().setBackgroundColor(Color.BLACK);
     }
 
     @Override
