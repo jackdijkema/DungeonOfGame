@@ -2,21 +2,25 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+import org.jetbrains.annotations.NotNull;
 public class Game extends GameApplication {
 
     private Entity player;
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setWidth(800);
-        settings.setHeight(800);
-        settings.setTitle("GameSEDungeon");
+        settings.setWidth(1920);
+        settings.setHeight(1080);
+        settings.setFullScreenAllowed(true);
+        settings.setFullScreenFromStart(true);
         settings.setVersion("1.0");
 
+        settings.setTitle("Game Of Dungeon");
+        settings.setMainMenuEnabled(true);
     }
 
     @Override
@@ -45,7 +49,6 @@ public class Game extends GameApplication {
             player.translateY(5);
         });
     }
-
     public static void main(String[] args){
         launch(args);
     }
