@@ -2,3 +2,4 @@
 
 - JavaFX 
 - Library: FXGL
+- Members: Jack, Hassan, Rick en Luuk
