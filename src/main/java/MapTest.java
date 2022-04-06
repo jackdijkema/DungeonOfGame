@@ -4,12 +4,17 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.input.KeyCode;
+
+import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 
 
 public class MapTest extends GameApplication{
     private Entity player;
-    public enum EntityType{PLAYER, ENEMY}
+    public enum EntityType {
+        PLAYER, WALL, ENEMY
+    }
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -71,10 +76,33 @@ public class MapTest extends GameApplication{
     }
 
     @Override
-    protected void initPhysics(){
-        FXGL.getPhysicsWorld().setGravity(0,0);
-    }
+    protected void initPhysics() {
+        getPhysicsWorld().setGravity(0,0);
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.WALL) {
 
+            // order of types is the same as passed into the constructor
+            @Override
+            protected void onCollisionBegin(Entity player, Entity wall) {
+                player.translate(-10,0);
+            }
+        });
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
+            @Override
+            protected void onCollisionBegin(Entity enemy, Entity wall) {
+                enemy.translate(-10,0);
+            }
+        });
+
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.ENEMY) {
+            @Override
+            protected void onCollisionBegin(Entity player, Entity enemy) {
+                player.translate(-10,0);
+                enemy.translate(10,0);
+
+
+            }
+        });
+    }
 
     public static void main(String[] args) {
         launch(args);

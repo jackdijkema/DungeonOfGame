@@ -38,7 +38,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>Game</mainClass>
+                            <mainClass>MapTest</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
