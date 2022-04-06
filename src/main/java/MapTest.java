@@ -8,6 +8,7 @@ import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 
 import java.awt.*;
 
@@ -63,7 +64,7 @@ public class MapTest extends GameApplication{
 
         FXGL.getInput().addAction(new UserAction("Down") {
             @Override
-            protected void onAction() {
+            protected void onActionBegin() {
                 player.getComponent(PlayerComponent.class).down();
             }
             protected void onActionEnd(){
@@ -73,7 +74,7 @@ public class MapTest extends GameApplication{
 
         FXGL.getInput().addAction(new UserAction("Right") {
             @Override
-            protected void onAction() {
+            protected void onActionBegin() {
                 player.getComponent(PlayerComponent.class).right();
             }
             protected void onActionEnd(){
@@ -83,13 +84,18 @@ public class MapTest extends GameApplication{
 
         FXGL.getInput().addAction(new UserAction("Up") {
             @Override
-            protected void onAction() {
+            protected void onActionBegin() {
                 player.getComponent(PlayerComponent.class).up();
             }
             protected void onActionEnd(){
                 player.getComponent(PlayerComponent.class).upEnd();
             }
         }, KeyCode.W);
+
+        FXGL.getInput().addAction(new UserAction("Shoot") {
+            @Override
+            protected void onActionBegin() {player.getComponent(PlayerComponent.class).shoot(player);}
+        }, MouseButton.PRIMARY);
 
     }
 
