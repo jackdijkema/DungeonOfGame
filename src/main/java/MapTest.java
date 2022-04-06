@@ -71,7 +71,7 @@ public class MapTest extends GameApplication{
     protected void initGame() {
 
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
-        FXGL.setLevelFromMap("map_1.1.tmx");
+        FXGL.setLevelFromMap("map_1.tmx");
         player = FXGL.getGameWorld().spawn("player", 50, 50);
     }
 
