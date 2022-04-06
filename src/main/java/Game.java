@@ -93,23 +93,6 @@ public class Game extends GameApplication {
     }
 
 
-    /*@Override
-    protected void initInput(){
-        getInput().addAction(new UserAction("up") {
-            @Override
-            protected void onAction() {
-                super.onAction();
-                player.getComponent(Player.class).up();
-            }
-
-            @Override
-            protected void onActionEnd() {
-                super.onActionEnd();
-                player.getComponent(Player.class).stopYMovement();
-            }
-        } ;{
-        })
-    }*/
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0,0);
