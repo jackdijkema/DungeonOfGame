@@ -72,12 +72,12 @@ public class Game extends GameApplication {
     }
 
     protected void shoot(){
+        final int SHOOT_POS = 2;
         Point2D direction = new Point2D(FXGL.getInput().getMouseXWorld() - (player.getRightX() + player.getX())/2, FXGL.getInput().getMouseYWorld() - (player.getBottomY() + player.getY())/2);
         FXGL.entityBuilder()
-                .at((player.getX() + player.getRightX()) / 2, (player.getY() + player.getBottomY()) / 2)
+                .at((player.getX() + player.getRightX()) / SHOOT_POS, (player.getY() + player.getBottomY()) / SHOOT_POS)
                 .viewWithBBox(new Circle(5, Color.ORANGE))
                 //.viewWithBBox("player/vuur.png")
-                //.scale(0.1, 0.1)
                 .with(new ProjectileComponent(direction, 500))
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.BALL)
