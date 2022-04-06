@@ -1,5 +1,7 @@
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
@@ -19,8 +21,22 @@ public class MapTest extends GameApplication{
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setHeight(500);
-        settings.setWidth(500);
+        settings.setWidth(1920);
+        settings.setHeight(1080);
+        settings.setFullScreenAllowed(true);
+        settings.setFullScreenFromStart(true);
+        settings.setVersion("1.0");
+
+        settings.setTitle("Game Of Dungeon");
+        settings.setMainMenuEnabled(true);
+
+
+        settings.setSceneFactory(new SceneFactory() {
+            @Override
+            public FXGLMenu newMainMenu() {
+                return new DungeonOfGameMainMenu();
+            }
+        });
     }
 
     @Override
