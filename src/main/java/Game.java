@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -14,9 +15,6 @@ import javafx.scene.shape.Rectangle;
 public class Game extends GameApplication {
 
     private Entity player;
-    private char richtingx;
-    private char richtingy;
-    private static int teller = 0;
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -31,7 +29,8 @@ public class Game extends GameApplication {
     protected void initGame(){
         player = FXGL.entityBuilder()
                 .at(400, 400)
-                .viewWithBBox(new Rectangle(30, 30, Color.RED))
+                .viewWithBBox("player/player.png")
+                .scale(0.5, 0.5)
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PLAYER)
                 .buildAndAttach();
@@ -43,25 +42,21 @@ public class Game extends GameApplication {
     protected void initInput(){
         FXGL.onKey(KeyCode.D, () -> {
             player.translateX(5);
-            richtingx = 'D';
         });
 
         FXGL.onKey(KeyCode.A, () -> {
             player.translateX(-5);
-            richtingx = 'A';
         });
 
         FXGL.onKey(KeyCode.W, () -> {
             player.translateY(-5);
-            richtingy = 'W';
         });
 
         FXGL.onKey(KeyCode.S, () -> {
             player.translateY(5);
-            richtingy = 'S';
         });
 
-        FXGL.onKey(KeyCode.SPACE, () -> {
+        FXGL.onBtnDown(MouseButton.PRIMARY, () ->{
             shoot();
         });
     }
@@ -77,21 +72,15 @@ public class Game extends GameApplication {
     }
 
     protected void shoot(){
-        int xrichting = 0;
-        int yrichting = 0;
-        if(richtingx == 'A')
-            xrichting = -1;
-        else if (richtingx == 'D')
-            xrichting = 1;
-        if (richtingy == 'W')
-            yrichting = -1;
-        else if (richtingy == 'S')
-            yrichting = 1;
-        Point2D direction = new Point2D(xrichting, yrichting);
+        Point2D direction = new Point2D(FXGL.getInput().getMouseXWorld() - (player.getRightX() + player.getX())/2, FXGL.getInput().getMouseYWorld() - (player.getBottomY() + player.getY())/2);
         FXGL.entityBuilder()
-                .at(player.getRightX(), player.getBottomY())
-                .viewWithBBox(new Circle(5, Color.WHITE))
+                .at((player.getX() + player.getRightX()) / 2, (player.getY() + player.getBottomY()) / 2)
+                .viewWithBBox(new Circle(5, Color.ORANGE))
+                //.viewWithBBox("player/vuur.png")
+                //.scale(0.1, 0.1)
                 .with(new ProjectileComponent(direction, 500))
+                .with(new CollidableComponent(true))
+                .type(EntityTypes.BALL)
                 .buildAndAttach();
     }
 
