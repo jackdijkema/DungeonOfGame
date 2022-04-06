@@ -1,8 +1,19 @@
-import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.EntityFactory;
-import com.almasb.fxgl.entity.SpawnData;
-import com.almasb.fxgl.entity.Spawns;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Rectangle;
+/*public class ApplicationFactory implements EntityFactory{
 
-import java.awt.*;
+
+    public class GameFactory{
+        @spawns("player")
+        public Entity newWater(SpawnData data){
+                return entityBuilder(Data)
+                PhysicalComponent physics = new PhysicsComponent();
+                physics.setBodyType(BodyType.DYNAMIC);
+                physics.addGroundSensor(
+                new HitBox(
+                "Ground_sensor"
+                new Point2D(16, 20)
+                BoundingShape.box(6, 2)
+                )
+        }
+    }
+}
+*/

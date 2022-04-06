@@ -1,25 +1,32 @@
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.Viewport;
+import com.almasb.fxgl.dsl.components.RandomMoveComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+
+import javax.print.attribute.standard.Media;
+import java.io.File;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Game extends GameApplication {
+
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setWidth(600);
         settings.setHeight(600);
         settings.setTitle("Basic Game App");
         settings.setVersion("0.1");
-    }
+    };
 
     @Override
     protected void initInput() {
@@ -42,10 +49,10 @@ public class Game extends GameApplication {
             player.translateY(5); // move down 5 pixels
             inc("pixelsMoved", +5);
         });
+    }
 
-        onKeyDown(KeyCode.F, () -> {
-            play("drop.wav");
-        });
+    protected void onPreInit() {
+        loopBGM("test.mp3");
     }
 
     @Override
@@ -77,14 +84,38 @@ public class Game extends GameApplication {
                 .at(300, 300)
                 .viewWithBBox(new Rectangle(30, 30, Color.BLUE))
                 .with(new CollidableComponent(true))
+                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth() - 100, getAppHeight()), 100))
                 .buildAndAttach();
+
+        //Viewport viewport = getGameScene().getViewport();
+        //viewport.bindToEntity(player, getAppWidth() / 2);
+        //viewport.setLazy(true);
     }
 
+
+    /*@Override
+    protected void initInput(){
+        getInput().addAction(new UserAction("up") {
+            @Override
+            protected void onAction() {
+                super.onAction();
+                player.getComponent(Player.class).up();
+            }
+
+            @Override
+            protected void onActionEnd() {
+                super.onActionEnd();
+                player.getComponent(Player.class).stopYMovement();
+            }
+        } ;{
+        })
+    }*/
     @Override
     protected void initPhysics() {
+        getPhysicsWorld().setGravity(0,0);
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.WALL) {
 
-            // order of types is the same as passed into the constructord
+            // order of types is the same as passed into the constructor
             @Override
             protected void onCollisionBegin(Entity player, Entity wall) {
                 player.translate(-10,0);
@@ -111,5 +142,6 @@ public class Game extends GameApplication {
 
     public static void main(String[] args) {
         launch(args);
+
     }
 }
