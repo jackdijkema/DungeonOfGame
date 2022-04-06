@@ -30,6 +30,7 @@ public class DungeonOfGameMainMenu extends FXGLMenu {
         var settings = getSettings();
 
         var btnPlay = new DungeonButton("Play Game", this::fireNewGame);
+//      TODO: Make options menu work.
         var btnOptions = new DungeonButton("Options", () -> {});
         var btnExit = new DungeonButton("Exit", this::fireExit);
 
@@ -40,11 +41,9 @@ public class DungeonOfGameMainMenu extends FXGLMenu {
                 getUIFactoryService().newText("Version: " + settings.getVersion())
         );
 
-
-
-        //Center Title image TODO: Center better
+        //Center Title image
         title.setTranslateY(getAppHeight() / 6.0);
-        title.setTranslateX(getAppWidth() / 3.0 - 150);
+        title.setTranslateX((getAppWidth() - title.getWidth())/ 2 + (35 / 2.00));
 
         // Center Menu TODO: Center better
         menuItems.setTranslateX(800);
