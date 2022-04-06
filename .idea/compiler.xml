@@ -10,5 +10,8 @@
         <module name="dungeon" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="GameSEDungeon" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

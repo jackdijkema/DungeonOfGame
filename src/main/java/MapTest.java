@@ -16,7 +16,7 @@ import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 public class MapTest extends GameApplication{
     private Entity player;
     public enum EntityType {
-        PLAYER, WALL, ENEMY
+        PLAYER, WALL, ENEMY, BALL
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MapTest extends GameApplication{
 
         FXGL.getInput().addAction(new UserAction("Left") {
             @Override
-            protected void onActionBegin() {
+            protected void onAction() {
                 player.getComponent(PlayerComponent.class).left();
             }
             protected void onActionEnd(){
@@ -54,7 +54,7 @@ public class MapTest extends GameApplication{
 
         FXGL.getInput().addAction(new UserAction("Down") {
             @Override
-            protected void onActionBegin() {
+            protected void onAction() {
                 player.getComponent(PlayerComponent.class).down();
             }
             protected void onActionEnd(){
@@ -64,7 +64,7 @@ public class MapTest extends GameApplication{
 
         FXGL.getInput().addAction(new UserAction("Right") {
             @Override
-            protected void onActionBegin() {
+            protected void onAction() {
                 player.getComponent(PlayerComponent.class).right();
             }
             protected void onActionEnd(){
@@ -74,7 +74,7 @@ public class MapTest extends GameApplication{
 
         FXGL.getInput().addAction(new UserAction("Up") {
             @Override
-            protected void onActionBegin() {
+            protected void onAction() {
                 player.getComponent(PlayerComponent.class).up();
             }
             protected void onActionEnd(){
