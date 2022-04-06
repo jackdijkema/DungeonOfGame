@@ -30,8 +30,9 @@ public class TestFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(MapTest.EntityType.PLAYER)
-                .viewWithBBox("player/player.png")
-                .scale(0.5, 0.5)
+                //.viewWithBBox("player/player.png")
+                .viewWithBBox(new Rectangle(30, 30, Color.BLUE))
+                //.scale(0.5, 0.5)
                 .collidable()
                 .with(physics)
                 .with(new PlayerComponent())
