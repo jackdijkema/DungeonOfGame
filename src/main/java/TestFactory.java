@@ -1,15 +1,20 @@
+import com.almasb.fxgl.dsl.components.RandomMoveComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.*;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.entityBuilder;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getAppWidth;
 
 
 public class TestFactory implements EntityFactory{
@@ -34,6 +39,19 @@ public class TestFactory implements EntityFactory{
                 .collidable()
                 .with(physics)
                 .with(new PlayerComponent())
+                .build();
+    }
+    @Spawns("enemy")
+    public Entity newEnemy(SpawnData data){
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+
+        return entityBuilder(data)
+                .type(MapTest.EntityType.ENEMY)
+                .viewWithBBox(new Rectangle(30, 30, Color.RED))
+                .collidable()
+                .with(physics)
+                .with(new RandomMoveComponent(new Rectangle2D(100, 0, getAppWidth() - 100, getAppHeight() - 100), 1000))
                 .build();
     }
 }
