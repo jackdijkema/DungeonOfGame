@@ -59,7 +59,7 @@ public class PlayerComponent extends Component {
                 //.viewWithBBox("player/vuur.png")
                 .with(new ProjectileComponent(direction, 500))
                 .with(new CollidableComponent(true))
-                .type(EntityTypes.BALL)
+                .type(MapTest.EntityType.BALL)
                 .buildAndAttach();
     }
 
