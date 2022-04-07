@@ -28,7 +28,7 @@ public class EnemyComponent extends Component {
 
         Entity player = FXGL.getGameWorld().getSingleton(MapTest.EntityType.PLAYER);
 
-        double richting = (player.getY() - physics.getEntity().getY() / player.getX() - player.getX());
+        //double richting = (player.getY() - physics.getEntity().getY() / player.getX() - player.getX());
 
         physics.setLinearVelocity(player.getX() - physics.getEntity().getX(), player.getY() - physics.getEntity().getY());
 
