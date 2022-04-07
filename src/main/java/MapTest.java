@@ -8,12 +8,9 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-
-import java.awt.*;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
