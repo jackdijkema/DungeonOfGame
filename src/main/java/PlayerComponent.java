@@ -60,7 +60,6 @@ public class PlayerComponent extends Component {
             .with(new ProjectileComponent(direction, 500))
             .with(new CollidableComponent(true))
             .type(MapTest.EntityType.BALL)
-            .collidable()
             .buildAndAttach();
     }
 
