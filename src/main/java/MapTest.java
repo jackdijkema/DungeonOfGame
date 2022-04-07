@@ -15,6 +15,7 @@ import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 
 public class MapTest extends GameApplication{
     private Entity player;
+    private Entity enemy;
     public enum EntityType {
         PLAYER, WALL, ENEMY, BALL
     }
@@ -95,6 +96,7 @@ public class MapTest extends GameApplication{
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         FXGL.setLevelFromMap("map_1.tmx");
         player = FXGL.getGameWorld().spawn("player", 50, 50);
+        enemy = FXGL.getGameWorld().spawn("enemy", 200, 200);
     }
 
     @Override
@@ -108,6 +110,7 @@ public class MapTest extends GameApplication{
                 player.translate(-10,0);
             }
         });
+
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
             @Override
             protected void onCollisionBegin(Entity enemy, Entity wall) {
@@ -120,8 +123,13 @@ public class MapTest extends GameApplication{
             protected void onCollisionBegin(Entity player, Entity enemy) {
                 player.translate(-10,0);
                 enemy.translate(10,0);
+            }
+        });
 
-
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.BALL, EntityType.WALL) {
+            @Override
+            protected void onCollision(Entity ball, Entity wall) {
+                ball.removeFromWorld();
             }
         });
     }

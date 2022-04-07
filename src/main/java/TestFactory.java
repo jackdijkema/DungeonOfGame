@@ -1,3 +1,4 @@
+import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
@@ -36,6 +37,20 @@ public class TestFactory implements EntityFactory{
                 .collidable()
                 .with(physics)
                 .with(new PlayerComponent())
+                .build();
+    }
+
+    @Spawns("enemy")
+    public Entity newEnemy(SpawnData data){
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+
+        return entityBuilder(data)
+                .type(MapTest.EntityType.ENEMY)
+                .viewWithBBox(new Rectangle(30, 30, Color.RED))
+                .collidable()
+                .with(new HealthIntComponent(3))
+                .with(physics)
                 .build();
     }
 }
