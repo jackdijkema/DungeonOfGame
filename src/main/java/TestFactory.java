@@ -40,6 +40,7 @@ public class TestFactory implements EntityFactory{
                 .viewWithBBox(new Rectangle(30, 30, Color.BLUE))
                 //.scale(0.5, 0.5)
                 .collidable()
+                .with(new HealthIntComponent(3))
                 .with(physics)
                 .with(new PlayerComponent())
                 .build();
@@ -49,28 +50,16 @@ public class TestFactory implements EntityFactory{
     public Entity newEnemy(SpawnData data){
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
+        //Point2D directionEnemy = new Point2D(500, 500);
 
         return entityBuilder(data)
                 .type(MapTest.EntityType.ENEMY)
                 .viewWithBBox(new Rectangle(30, 30, Color.RED))
                 .collidable()
                 .with(new HealthIntComponent(3))
+                //.with(new ProjectileComponent(directionEnemy, 100))
                 .with(physics)
-                .build();
+                .buildAndAttach();
     }
 
-//    @Spawns("ball")
-//    public Entity newBall(){
-//        final int SHOOT_POS = 2;
-//        Point2D direction = new Point2D(FXGL.getInput().getMouseXWorld() - (player.getRightX() + player.getX())/2, FXGL.getInput().getMouseYWorld() - (player.getBottomY() + player.getY())/2);
-//        return FXGL.entityBuilder()
-//                .at((player.getX() + player.getRightX()) / SHOOT_POS, (player.getY() + player.getBottomY()) / SHOOT_POS)
-//                .viewWithBBox(new Circle(5, Color.ORANGE))
-//                //.viewWithBBox("player/vuur.png")
-//                .with(new ProjectileComponent(direction, 500))
-//                .with(new CollidableComponent(true))
-//                .type(MapTest.EntityType.BALL)
-//                .collidable()
-//                .buildAndAttach();
-//    }
 }
