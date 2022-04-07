@@ -3,6 +3,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
@@ -15,6 +16,8 @@ import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 
 public class MapTest extends GameApplication{
     private Entity player;
+    private Entity enemy;
+    private Entity enemy2;
     public enum EntityType {
         PLAYER, WALL, ENEMY, BALL
     }
@@ -95,6 +98,8 @@ public class MapTest extends GameApplication{
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         FXGL.setLevelFromMap("map_1.tmx");
         player = FXGL.getGameWorld().spawn("player", 50, 50);
+        enemy = FXGL.getGameWorld().spawn("enemy", 200, 200);
+        enemy2 = FXGL.getGameWorld().spawn("enemy", 200, 240);
     }
 
     @Override
@@ -120,8 +125,27 @@ public class MapTest extends GameApplication{
             protected void onCollisionBegin(Entity player, Entity enemy) {
                 player.translate(-10,0);
                 enemy.translate(10,0);
+            }
+        });
 
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.BALL, EntityType.ENEMY) {
+            @Override
+            protected void onCollisionBegin(Entity ball, Entity enemy) {
+                ball.removeFromWorld();
 
+                var hp = enemy.getComponent(HealthIntComponent.class);
+                hp.damage(1);
+
+                if (hp.isZero()){
+                    enemy.removeFromWorld();
+                }
+            }
+        });
+
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.BALL, EntityType.WALL) {
+            @Override
+            protected void onCollisionBegin(Entity ball, Entity wall) {
+                ball.removeFromWorld();
             }
         });
     }
