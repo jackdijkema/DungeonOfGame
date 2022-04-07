@@ -1,20 +1,12 @@
-import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.texture.Texture;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-
-import java.awt.*;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 
@@ -51,7 +43,7 @@ public class DungeonOfGameMainMenu extends FXGLMenu {
         menuItems.setTranslateY(450);
 
         // Menu TEXT ALIGNMENT
-        menuItems.setAlignment(Pos.CENTER_LEFT);
+        menuItems.setAlignment(Pos.CENTER);
 
         getContentRoot().getChildren().addAll(
             background,
@@ -59,25 +51,5 @@ public class DungeonOfGameMainMenu extends FXGLMenu {
             title,
             menuItems
         );
-    }
-
-    private static class DungeonButton extends StackPane {
-        private final String name;
-        private Runnable action;
-        private Text text;
-        private  Rectangle selector;
-
-        public DungeonButton(String name, Runnable action) {
-            this.name = name;
-            this.action = action;
-
-            text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 17.0);
-
-            selector = new Rectangle(7, 17, Color.WHITE);
-
-            setOnMouseClicked(e -> action.run());
-
-            getChildren().addAll(selector, text);
-        }
     }
 }
