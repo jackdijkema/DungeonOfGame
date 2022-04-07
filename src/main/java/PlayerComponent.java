@@ -16,6 +16,7 @@ public class PlayerComponent extends Component {
 
     public void onUpdate(Entity entity, double tpf){
 
+
     }
 
     public void left(){

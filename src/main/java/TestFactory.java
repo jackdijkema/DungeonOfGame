@@ -53,7 +53,8 @@ public class TestFactory implements EntityFactory{
                 .viewWithBBox(new Rectangle(30, 30, Color.RED))
                 .collidable()
                 .with(physics)
-                .with(new RandomMoveComponent(new Rectangle2D(100, 0, getAppWidth() - 100, getAppHeight() - 100), 1000))
+
+                .with(new PlayerComponent())
                 .build();
     }
 }

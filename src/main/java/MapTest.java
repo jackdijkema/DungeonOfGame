@@ -2,6 +2,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.SceneFactory;
+import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
@@ -10,11 +11,13 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
+import static com.almasb.fxgl.dsl.FXGL.getAppCenter;
 import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 
 
 public class MapTest extends GameApplication{
     private Entity player;
+    private Entity enemy;
     public enum EntityType {
         PLAYER, WALL, ENEMY, BALL
     }
@@ -90,31 +93,25 @@ public class MapTest extends GameApplication{
     }
 
     @Override
+    public void onUpdate(double tpf) {
+        if (FXGLMath.randomBoolean(0.3f)) {
+            enemy.getComponent(PlayerComponent.class).left();
+
+        }
+    }
+
+    @Override
     protected void initGame() {
 
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         FXGL.setLevelFromMap("map_1.tmx");
         player = FXGL.getGameWorld().spawn("player", 50, 50);
+        enemy = FXGL.getGameWorld().spawn("enemy", 250, 250);
     }
 
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0,0);
-        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.WALL) {
-
-            // order of types is the same as passed into the constructor
-            @Override
-            protected void onCollisionBegin(Entity player, Entity wall) {
-                player.translate(-10,0);
-            }
-        });
-        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
-            @Override
-            protected void onCollisionBegin(Entity enemy, Entity wall) {
-                enemy.translate(-10,0);
-            }
-        });
-
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.ENEMY) {
             @Override
             protected void onCollisionBegin(Entity player, Entity enemy) {
