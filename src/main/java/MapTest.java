@@ -20,8 +20,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 
 public class MapTest extends GameApplication{
-    private int currentLevel = 0;
-    private int killCount = 0;
+    private int currentLevel = 1;
     private Entity player;
     private Entity enemy;
     private Entity enemy2;
@@ -100,6 +99,7 @@ public class MapTest extends GameApplication{
         FXGL.getInput().addAction(new UserAction("Next Level") {
             @Override
             protected void onActionBegin() {
+                currentLevel += 1;
                 getGameController().startNewGame();
             }
         }, KeyCode.L);
@@ -117,8 +117,6 @@ public class MapTest extends GameApplication{
     }
 
     private void setLevel() {
-        currentLevel += 1;
-        FXGL.inc("level", +1);
         String levelPath = String.format("map_%s.tmx", currentLevel);
         Level currentLevelData = FXGL.setLevelFromMap(levelPath);
     }
@@ -166,8 +164,7 @@ public class MapTest extends GameApplication{
 
                 if (hp.isZero()){
                     enemy.removeFromWorld();
-                    killCount += 1;
-                    FXGL.inc("kills", killCount);
+                    FXGL.inc("kills", +1);
                 }
             }
         });
@@ -214,7 +211,7 @@ public class MapTest extends GameApplication{
     }
 
     protected void initGameVars(Map<String, Object> vars){
-        vars.put("kills", killCount);
+        vars.put("kills", 0);
         vars.put("level", currentLevel);
     }
 

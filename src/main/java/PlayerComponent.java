@@ -1,7 +1,6 @@
 
 
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.dsl.components.ProjectileComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
@@ -13,6 +12,7 @@ import javafx.scene.shape.Circle;
 
 public class PlayerComponent extends Component {
 
+    final int SHOOT_POS = 2;
     private PhysicsComponent physics;
 
     public void onUpdate(Entity entity, double tpf){
@@ -52,7 +52,6 @@ public class PlayerComponent extends Component {
     }
 
     public void shoot(Entity player){
-        final int SHOOT_POS = 2;
         Point2D direction = new Point2D(FXGL.getInput().getMouseXWorld() - (player.getRightX() + player.getX())/2, FXGL.getInput().getMouseYWorld() - (player.getBottomY() + player.getY())/2);
         FXGL.entityBuilder()
             .at((player.getX() + player.getRightX()) / SHOOT_POS, (player.getY() + player.getBottomY()) / SHOOT_POS)
@@ -64,4 +63,8 @@ public class PlayerComponent extends Component {
             .collidable()
             .buildAndAttach();
     }
+
+
+
+
 }

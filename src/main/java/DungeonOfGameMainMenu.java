@@ -2,6 +2,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.texture.Texture;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,8 +25,8 @@ public class DungeonOfGameMainMenu extends FXGLMenu {
     public DungeonOfGameMainMenu() {
         super(MenuType.MAIN_MENU);
 
-        var background = texture("main-menu/background.png",getAppWidth(), getAppHeight());
-        var title = texture("main-menu/title.png");
+        Texture background = texture("main-menu/background.png",getAppWidth(), getAppHeight());
+        Texture title = texture("main-menu/title.png");
 
         var settings = getSettings();
 
@@ -53,15 +54,15 @@ public class DungeonOfGameMainMenu extends FXGLMenu {
         menuItems.setAlignment(Pos.CENTER_LEFT);
 
         getContentRoot().getChildren().addAll(
-                background,
-                contentBox,
-                title,
-                menuItems
+            background,
+            contentBox,
+            title,
+            menuItems
         );
     }
 
     private static class DungeonButton extends StackPane {
-        private String name;
+        private final String name;
         private Runnable action;
         private Text text;
         private  Rectangle selector;
