@@ -61,6 +61,8 @@ public class TestFactory implements EntityFactory{
                 .collidable()
                 .with(new HealthIntComponent(hp))
                 .with(new HealthBarShowComponent(hp, Color.RED))
+                .with(new EnemyComponent(physics))
+                .with(new HealthIntComponent(3))
                 .with(physics)
                 .build();
     }
