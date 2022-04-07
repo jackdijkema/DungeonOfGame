@@ -54,6 +54,7 @@ public class TestFactory implements EntityFactory{
                 .type(MapTest.EntityType.ENEMY)
                 .viewWithBBox(new Rectangle(30, 30, Color.RED))
                 .collidable()
+                .with(new EnemyComponent(physics))
                 .with(new HealthIntComponent(3))
                 .with(physics)
                 .build();
