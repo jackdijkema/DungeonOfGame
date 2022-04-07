@@ -7,8 +7,13 @@ import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+
+import java.awt.*;
+import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -144,6 +149,7 @@ public class MapTest extends GameApplication{
 
                 if (hp.isZero()){
                     enemy.removeFromWorld();
+                    FXGL.inc("kills", +1);
                 }
             }
         });
@@ -154,6 +160,44 @@ public class MapTest extends GameApplication{
                 ball.removeFromWorld();
             }
         });
+    }
+
+    protected void initUI(){
+        Label myText = new Label("Kills");
+        myText.setTranslateX(700);
+        myText.setTranslateY(700);
+        myText.setScaleY(3);
+        myText.setScaleX(3);
+        myText.textProperty().bind(FXGL.getWorldProperties().intProperty("kills").asString());
+
+        Label myText2 = new Label("Kills: ");
+        myText2.setTranslateX(600);
+        myText2.setTranslateY(700);
+        myText2.setScaleY(3);
+        myText2.setScaleX(3);
+
+        Label myText3 = new Label("Level: ");
+        myText3.setTranslateX(600);
+        myText3.setTranslateY(630);
+        myText3.setScaleY(3);
+        myText3.setScaleX(3);
+
+        Label myText4 = new Label("level");
+        myText4.setTranslateX(700);
+        myText4.setTranslateY(630);
+        myText4.setScaleY(3);
+        myText4.setScaleX(3);
+        myText4.textProperty().bind(FXGL.getWorldProperties().intProperty("level").asString());
+
+        FXGL.getGameScene().addUINode(myText);
+        FXGL.getGameScene().addUINode(myText2);
+        FXGL.getGameScene().addUINode(myText3);
+        FXGL.getGameScene().addUINode(myText4);
+    }
+
+    protected void initGameVars(Map<String, Object> vars){
+        vars.put("kills", 0);
+        vars.put("level", 1);
     }
 
     public static void main(String[] args) {
