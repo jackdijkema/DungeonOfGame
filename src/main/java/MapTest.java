@@ -1,10 +1,12 @@
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
@@ -12,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
 import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
+import static com.almasb.fxgl.dsl.FXGL.onCollision;
 
 
 public class MapTest extends GameApplication{
@@ -95,8 +98,9 @@ public class MapTest extends GameApplication{
     @Override
     protected void initGame() {
 
+        int currentLevel = 2;
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
-        FXGL.setLevelFromMap("map_1.tmx");
+        setLevel(currentLevel);
         player = FXGL.getGameWorld().spawn("player", 50, 50);
         enemy = FXGL.getGameWorld().spawn("enemy", 200, 200);
         enemy2 = FXGL.getGameWorld().spawn("enemy", 200, 240);
@@ -141,6 +145,10 @@ public class MapTest extends GameApplication{
                 }
             }
         });
+//
+//        onCollision(EntityType.BALL, EntityType.WALL, (Ball, Wall) -> {
+//            Ball.
+//        });
 
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.BALL, EntityType.WALL) {
             @Override
@@ -148,6 +156,14 @@ public class MapTest extends GameApplication{
                 ball.removeFromWorld();
             }
         });
+    }
+
+    private void setLevel(int level){
+        GameScene gameScene = FXGL.getGameScene();
+        String levelPath = String.format("map_%s.tmx", level);
+        Level currentLevelData = FXGL.setLevelFromMap(levelPath);
+        gameScene.getViewport().setBounds(0, 0, currentLevelData.getWidth(), currentLevelData.getHeight());
+        gameScene.getViewport().setZoom(gameScene.getViewport().getHeight() / currentLevelData.getHeight());
     }
 
     public static void main(String[] args) {
