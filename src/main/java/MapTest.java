@@ -6,20 +6,27 @@ import com.almasb.fxgl.audio.Sound;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
+import java.util.Map;
+
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 
 public class MapTest extends GameApplication{
+    private int currentLevel = 1;
+    private int killCount = 0;
     private Entity player;
     private Entity enemy;
     private Entity enemy2;
@@ -96,16 +103,31 @@ public class MapTest extends GameApplication{
             protected void onActionBegin() {player.getComponent(PlayerComponent.class).shoot(player);}
         }, MouseButton.PRIMARY);
 
+        FXGL.getInput().addAction(new UserAction("Next Level") {
+            @Override
+            protected void onActionBegin() {
+                killCount = 0;
+                currentLevel += 1;
+                getGameController().startNewGame();
+            }
+        }, KeyCode.L);
+
     }
 
     @Override
     protected void initGame() {
 
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
-        FXGL.setLevelFromMap("map_1.tmx");
+        setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
-        enemy = FXGL.getGameWorld().spawn("enemy", 200, 200);
-        enemy2 = FXGL.getGameWorld().spawn("enemy", 200, 240);
+        FXGL.getGameWorld().spawn("enemy", 200, 200);
+        FXGL.getGameWorld().spawn("enemy", 200, 240);
+    }
+
+    private void setLevel() {
+        String levelPath = String.format("map_%s.tmx", currentLevel);
+        Level currentLevelData = FXGL.setLevelFromMap(levelPath);
+
     }
 
     @Override
@@ -117,6 +139,8 @@ public class MapTest extends GameApplication{
             @Override
             protected void onCollisionBegin(Entity player, Entity wall) {
                 player.translate(-10,0);
+                System.out.println("testetssts");
+//                player.removeFromWorld();
             }
         });
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
@@ -160,6 +184,14 @@ public class MapTest extends GameApplication{
 
                 if (hp.isZero()){
                     enemy.removeFromWorld();
+                    FXGL.inc("kills", +1);
+                    killCount += 1;
+                }
+
+                if (killCount == 2){
+                    killCount = 0;
+                    currentLevel += 1;
+                    getGameController().startNewGame();
                 }
             }
         });
@@ -171,6 +203,7 @@ public class MapTest extends GameApplication{
             }
         });
     }
+
 
     public void deathHandle() {
         var title = texture("main-menu/title.png");
@@ -200,9 +233,44 @@ public class MapTest extends GameApplication{
 
         menuItems.setAlignment(Pos.CENTER);
 
-        getDialogService().showBox("GAME OVER, YOU DIED!", menuItems
-                // Execute after box has been closed.
-        );
+        getDialogService().showBox("GAME OVER, YOU DIED!", menuItems);
+      
+    protected void initUI(){
+        Label myText = new Label("Kills");
+        myText.setTranslateX(700);
+        myText.setTranslateY(700);
+        myText.setScaleY(3);
+        myText.setScaleX(3);
+        myText.textProperty().bind(FXGL.getWorldProperties().intProperty("kills").asString());
+
+        Label myText2 = new Label("Kills: ");
+        myText2.setTranslateX(600);
+        myText2.setTranslateY(700);
+        myText2.setScaleY(3);
+        myText2.setScaleX(3);
+
+        Label myText3 = new Label("Level: ");
+        myText3.setTranslateX(600);
+        myText3.setTranslateY(630);
+        myText3.setScaleY(3);
+        myText3.setScaleX(3);
+
+        Label myText4 = new Label("level");
+        myText4.setTranslateX(700);
+        myText4.setTranslateY(630);
+        myText4.setScaleY(3);
+        myText4.setScaleX(3);
+        myText4.textProperty().bind(FXGL.getWorldProperties().intProperty("level").asString());
+
+        FXGL.getGameScene().addUINode(myText);
+        FXGL.getGameScene().addUINode(myText2);
+        FXGL.getGameScene().addUINode(myText3);
+        FXGL.getGameScene().addUINode(myText4);
+    }
+
+    protected void initGameVars(Map<String, Object> vars){
+        vars.put("kills", 0);
+        vars.put("level", currentLevel);
     }
 
     public static void main(String[] args) {
