@@ -5,6 +5,7 @@ import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.geometry.Pos;
@@ -19,6 +20,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 
 public class MapTest extends GameApplication{
+    private int currentLevel = 0;
     private Entity player;
     private Entity enemy;
     private Entity enemy2;
@@ -94,16 +96,29 @@ public class MapTest extends GameApplication{
             protected void onActionBegin() {player.getComponent(PlayerComponent.class).shoot(player);}
         }, MouseButton.PRIMARY);
 
+        FXGL.getInput().addAction(new UserAction("Next Level") {
+            @Override
+            protected void onActionBegin() {
+                getGameController().startNewGame();
+            }
+        }, KeyCode.L);
+
     }
 
     @Override
     protected void initGame() {
 
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
-        FXGL.setLevelFromMap("map_1.tmx");
+        setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
         enemy = FXGL.getGameWorld().spawn("enemy", 200, 200);
         enemy2 = FXGL.getGameWorld().spawn("enemy", 200, 240);
+    }
+
+    private void setLevel() {
+        currentLevel += 1;
+        String levelPath = String.format("map_%s.tmx", currentLevel);
+        Level currentLevelData = FXGL.setLevelFromMap(levelPath);
     }
 
     @Override
