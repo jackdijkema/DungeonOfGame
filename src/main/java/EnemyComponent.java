@@ -12,5 +12,9 @@ public class EnemyComponent extends Component {
     private double speed;
     private PhysicsComponent physics;
 
+    @Override
+    public void onUpdate(double tpf) {
 
+
+    }
 }

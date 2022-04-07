@@ -56,6 +56,7 @@ public class TestFactory implements EntityFactory{
                 .viewWithBBox(new Rectangle(30, 30, Color.RED))
                 .collidable()
                 .with(new HealthIntComponent(hp))
+                .with(new EnemyComponent())
                 .with(new HealthBarShowComponent(hp, Color.RED))
                 .with(physics)
                 .build();
