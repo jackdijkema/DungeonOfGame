@@ -130,6 +130,8 @@ public class MapTest extends GameApplication{
             @Override
             protected void onCollisionBegin(Entity player, Entity wall) {
                 player.translate(-10,0);
+                System.out.println("testetssts");
+//                player.removeFromWorld();
             }
         });
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
