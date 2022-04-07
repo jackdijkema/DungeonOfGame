@@ -10,7 +10,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
-import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
+import static com.almasb.fxgl.dsl.FXGL.*;
 
 
 public class MapTest extends GameApplication{
@@ -124,6 +124,13 @@ public class MapTest extends GameApplication{
             protected void onCollisionBegin(Entity player, Entity enemy) {
                 player.translate(-10,0);
                 enemy.translate(10,0);
+                var hp = player.getComponent(HealthIntComponent.class);
+                hp.damage(1);
+
+                if (hp.isZero()){
+                    player.removeFromWorld();
+                    getGameController().gotoMainMenu();
+                }
             }
         });
 

@@ -49,6 +49,7 @@ public class TestFactory implements EntityFactory{
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         int hp = 3;
+        //Point2D directionEnemy = new Point2D(500, 500);
 
         return entityBuilder(data)
                 .type(MapTest.EntityType.ENEMY)
@@ -58,6 +59,7 @@ public class TestFactory implements EntityFactory{
                 .with(new HealthBarShowComponent(hp, Color.RED))
                 .with(physics)
                 .build();
+        //.with(new ProjectileComponent(directionEnemy, 100))
     }
 
 //    @Spawns("ball")
