@@ -23,6 +23,7 @@ public class TestFactory implements EntityFactory{
     @Spawns("wall")
     public Entity newWall(SpawnData data){
         return entityBuilder(data)
+                .type(MapTest.EntityType.WALL)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
                 .with(new PhysicsComponent())
                 .collidable()
@@ -65,9 +66,10 @@ public class TestFactory implements EntityFactory{
                 .with(physics)
                 .build();
     }
-
+//
 //    @Spawns("ball")
 //    public Entity newBall(){
+//        Entity player = player;
 //        final int SHOOT_POS = 2;
 //        Point2D direction = new Point2D(FXGL.getInput().getMouseXWorld() - (player.getRightX() + player.getX())/2, FXGL.getInput().getMouseYWorld() - (player.getBottomY() + player.getY())/2);
 //        return FXGL.entityBuilder()

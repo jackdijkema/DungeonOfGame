@@ -21,6 +21,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class MapTest extends GameApplication{
     private int currentLevel = 1;
+    private int killCount = 0;
     private Entity player;
     private Entity enemy;
     private Entity enemy2;
@@ -99,6 +100,7 @@ public class MapTest extends GameApplication{
         FXGL.getInput().addAction(new UserAction("Next Level") {
             @Override
             protected void onActionBegin() {
+                killCount = 0;
                 currentLevel += 1;
                 getGameController().startNewGame();
             }
@@ -112,13 +114,14 @@ public class MapTest extends GameApplication{
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
-        enemy = FXGL.getGameWorld().spawn("enemy", 200, 200);
-        enemy2 = FXGL.getGameWorld().spawn("enemy", 200, 240);
+        FXGL.getGameWorld().spawn("enemy", 200, 200);
+        FXGL.getGameWorld().spawn("enemy", 200, 240);
     }
 
     private void setLevel() {
         String levelPath = String.format("map_%s.tmx", currentLevel);
         Level currentLevelData = FXGL.setLevelFromMap(levelPath);
+
     }
 
     @Override
@@ -130,6 +133,8 @@ public class MapTest extends GameApplication{
             @Override
             protected void onCollisionBegin(Entity player, Entity wall) {
                 player.translate(-10,0);
+                System.out.println("testetssts");
+//                player.removeFromWorld();
             }
         });
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
@@ -165,6 +170,13 @@ public class MapTest extends GameApplication{
                 if (hp.isZero()){
                     enemy.removeFromWorld();
                     FXGL.inc("kills", +1);
+                    killCount += 1;
+                }
+
+                if (killCount == 2){
+                    killCount = 0;
+                    currentLevel += 1;
+                    getGameController().startNewGame();
                 }
             }
         });
