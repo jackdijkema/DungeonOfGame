@@ -13,11 +13,11 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
-import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
-import static com.almasb.fxgl.dsl.FXGL.onCollision;
+import static com.almasb.fxgl.dsl.FXGL.*;
 
 
 public class MapTest extends GameApplication{
+    int currentLevel = 0;
     private Entity player;
     private Entity enemy;
     private Entity enemy2;
@@ -46,14 +46,15 @@ public class MapTest extends GameApplication{
     }
 
     @Override
-    protected void initInput(){
+    protected void initInput() {
 
         FXGL.getInput().addAction(new UserAction("Left") {
             @Override
             protected void onAction() {
                 player.getComponent(PlayerComponent.class).left();
             }
-            protected void onActionEnd(){
+
+            protected void onActionEnd() {
                 player.getComponent(PlayerComponent.class).leftEnd();
             }
         }, KeyCode.A);
@@ -63,7 +64,8 @@ public class MapTest extends GameApplication{
             protected void onAction() {
                 player.getComponent(PlayerComponent.class).down();
             }
-            protected void onActionEnd(){
+
+            protected void onActionEnd() {
                 player.getComponent(PlayerComponent.class).downEnd();
             }
         }, KeyCode.S);
@@ -73,7 +75,8 @@ public class MapTest extends GameApplication{
             protected void onAction() {
                 player.getComponent(PlayerComponent.class).right();
             }
-            protected void onActionEnd(){
+
+            protected void onActionEnd() {
                 player.getComponent(PlayerComponent.class).rightEnd();
             }
         }, KeyCode.D);
@@ -83,24 +86,33 @@ public class MapTest extends GameApplication{
             protected void onAction() {
                 player.getComponent(PlayerComponent.class).up();
             }
-            protected void onActionEnd(){
+
+            protected void onActionEnd() {
                 player.getComponent(PlayerComponent.class).upEnd();
             }
         }, KeyCode.W);
 
         FXGL.getInput().addAction(new UserAction("Shoot") {
             @Override
-            protected void onActionBegin() {player.getComponent(PlayerComponent.class).shoot(player);}
+            protected void onActionBegin() {
+                player.getComponent(PlayerComponent.class).shoot(player);
+            }
         }, MouseButton.PRIMARY);
 
+        FXGL.getInput().addAction(new UserAction("Next Level") {
+            @Override
+            protected void onActionBegin() {
+                getGameController().startNewGame();
+            }
+        }, KeyCode.L);
     }
+
 
     @Override
     protected void initGame() {
 
-        int currentLevel = 2;
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
-        setLevel(currentLevel);
+        setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
         enemy = FXGL.getGameWorld().spawn("enemy", 200, 200);
         enemy2 = FXGL.getGameWorld().spawn("enemy", 200, 240);
@@ -158,12 +170,13 @@ public class MapTest extends GameApplication{
         });
     }
 
-    private void setLevel(int level){
-        GameScene gameScene = FXGL.getGameScene();
-        String levelPath = String.format("map_%s.tmx", level);
+    private void setLevel(){
+        currentLevel += 1;
+//        GameScene gameScene = FXGL.getGameScene();
+        String levelPath = String.format("map_%s.tmx", currentLevel);
         Level currentLevelData = FXGL.setLevelFromMap(levelPath);
-        gameScene.getViewport().setBounds(0, 0, currentLevelData.getWidth(), currentLevelData.getHeight());
-        gameScene.getViewport().setZoom(gameScene.getViewport().getHeight() / currentLevelData.getHeight());
+//        gameScene.getViewport().setBounds(0, 0, currentLevelData.getWidth(), currentLevelData.getHeight());
+//        gameScene.getViewport().setZoom(gameScene.getViewport().getHeight() / currentLevelData.getHeight());
     }
 
     public static void main(String[] args) {
