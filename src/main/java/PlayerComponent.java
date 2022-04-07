@@ -10,62 +10,68 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.util.List;
+
 public class PlayerComponent extends Component {
 
     private PhysicsComponent physics;
 
-    public void onUpdate(Entity entity, double tpf){
+
+    private List<Point2D> waypoints;
+    private Point2D nextWaypoint;
+    private Entity player;
+    private Entity enemy;
+    private double speed;
+
+
+    public void onUpdate(Entity entity, double tpf) {
 
 
     }
 
-    public void left(){
+    public void left() {
         physics.setVelocityX(-100);
     }
 
-    public void leftEnd(){
+    public void leftEnd() {
         physics.setVelocityX(0);
     }
 
-    public void right(){
+    public void right() {
         physics.setVelocityX(100);
     }
 
-    public void rightEnd(){
+    public void rightEnd() {
         physics.setVelocityX(0);
     }
 
-    public void up(){
+    public void up() {
         physics.setVelocityY(-100);
     }
 
-    public void upEnd(){
+    public void upEnd() {
         physics.setVelocityY(0);
     }
 
-    public void down(){
+    public void down() {
         physics.setVelocityY(100);
-   }
+    }
 
-    public void downEnd(){
+    public void downEnd() {
         physics.setVelocityY(0);
     }
 
-    public void shoot(Entity player){
+    public void shoot(Entity player) {
         final int SHOOT_POS = 2;
-        Point2D direction = new Point2D(FXGL.getInput().getMouseXWorld() - (player.getRightX() + player.getX())/2, FXGL.getInput().getMouseYWorld() - (player.getBottomY() + player.getY())/2);
+        Point2D direction = new Point2D(FXGL.getInput().getMouseXWorld() - (player.getRightX() + player.getX()) / 2, FXGL.getInput().getMouseYWorld() - (player.getBottomY() + player.getY()) / 2);
         FXGL.entityBuilder()
-            .at((player.getX() + player.getRightX()) / SHOOT_POS, (player.getY() + player.getBottomY()) / SHOOT_POS)
-            .viewWithBBox(new Circle(5, Color.ORANGE))
-            //.viewWithBBox("player/vuur.png")
-            .with(new ProjectileComponent(direction, 500))
-            .with(new CollidableComponent(true))
-            .type(MapTest.EntityType.BALL)
-            .collidable()
-            .buildAndAttach();
+                .at((player.getX() + player.getRightX()) / SHOOT_POS, (player.getY() + player.getBottomY()) / SHOOT_POS)
+                .viewWithBBox(new Circle(5, Color.ORANGE))
+                //.viewWithBBox("player/vuur.png")
+                .with(new ProjectileComponent(direction, 500))
+                .with(new CollidableComponent(true))
+                .type(MapTest.EntityType.BALL)
+                .collidable()
+                .buildAndAttach();
     }
-
-
-
-
 }

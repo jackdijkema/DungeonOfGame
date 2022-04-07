@@ -1,18 +1,16 @@
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.core.math.FXGLMath;
-import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
-import com.almasb.fxgl.time.LocalTimer;
-import javafx.util.Duration;
-
-import static com.almasb.fxgl.dsl.FXGL.*;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import javafx.geometry.Point2D;
 
 public class EnemyComponent extends Component {
 
+    private final Entity player = FXGL.getGameWorld().getSingleton(MapTest.EntityType.PLAYER);
+    private final Entity enemy = FXGL.getGameWorld().getSingleton(MapTest.EntityType.ENEMY);
+    private double speed;
+    private PhysicsComponent physics;
 
-    protected void shoot() {
-        spawn("Bullet", new SpawnData(0, 0).put("owner", getEntity()));
 
-        play("shoot" + (int)(Math.random() * 4 + 1) + ".wav");
-    }
 }

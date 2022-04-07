@@ -8,8 +8,16 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.core.math.FXGLMath;
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import javafx.geometry.Point2D;
 
 import static com.almasb.fxgl.dsl.FXGL.getPhysicsWorld;
 
@@ -18,6 +26,7 @@ public class MapTest extends GameApplication{
     private Entity player;
     private Entity enemy;
     private Entity enemy2;
+
     public enum EntityType {
         PLAYER, WALL, ENEMY, BALL
     }
