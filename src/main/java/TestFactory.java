@@ -33,6 +33,7 @@ public class TestFactory implements EntityFactory{
     public Entity newPlayer(SpawnData data){
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
+        int hp = 10;
 
         return entityBuilder(data)
                 .type(MapTest.EntityType.PLAYER)
@@ -41,6 +42,8 @@ public class TestFactory implements EntityFactory{
                 //.scale(0.5, 0.5)
                 .collidable()
                 .with(physics)
+                .with(new HealthIntComponent(hp))
+                .with(new HealthBarShowComponent(hp, Color.LIGHTGREEN))
                 .with(new PlayerComponent())
                 .build();
     }
@@ -49,12 +52,14 @@ public class TestFactory implements EntityFactory{
     public Entity newEnemy(SpawnData data){
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
+        int hp = 3;
 
         return entityBuilder(data)
                 .type(MapTest.EntityType.ENEMY)
                 .viewWithBBox(new Rectangle(30, 30, Color.RED))
                 .collidable()
-                .with(new HealthIntComponent(3))
+                .with(new HealthIntComponent(hp))
+                .with(new HealthBarShowComponent(hp, Color.RED))
                 .with(physics)
                 .build();
     }
