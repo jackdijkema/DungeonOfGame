@@ -12,13 +12,13 @@ public class PlayerComponent extends Component {
 
     final int SHOOT_POS = 2;
     private PhysicsComponent physics;
-
+    private int speed = 80;
     public void onUpdate(Entity entity, double tpf){
 
     }
 
     public void left(){
-        physics.setVelocityX(-100);
+        physics.setVelocityX(-speed);
     }
 
     public void leftEnd(){
@@ -26,7 +26,7 @@ public class PlayerComponent extends Component {
     }
 
     public void right(){
-        physics.setVelocityX(100);
+        physics.setVelocityX(speed);
     }
 
     public void rightEnd(){
@@ -34,7 +34,7 @@ public class PlayerComponent extends Component {
     }
 
     public void up(){
-        physics.setVelocityY(-100);
+        physics.setVelocityY(-speed);
     }
 
     public void upEnd(){
@@ -42,7 +42,7 @@ public class PlayerComponent extends Component {
     }
 
     public void down(){
-        physics.setVelocityY(100);
+        physics.setVelocityY(speed);
    }
 
     public void downEnd(){
@@ -59,8 +59,6 @@ public class PlayerComponent extends Component {
             .type(MapTest.EntityType.BALL)
             .buildAndAttach();
     }
-
-
 
 
 }

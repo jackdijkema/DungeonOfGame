@@ -2,15 +2,22 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.SceneFactory;
+import com.almasb.fxgl.audio.Sound;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -35,9 +42,9 @@ public class MapTest extends GameApplication{
         settings.setTitle("Game Of Dungeon");
         settings.setMainMenuEnabled(true);
 
-
         settings.setSceneFactory(new SceneFactory() {
             @Override
+            @NotNull
             public FXGLMenu newMainMenu() {
                 return new DungeonOfGameMainMenu();
             }
@@ -126,7 +133,6 @@ public class MapTest extends GameApplication{
             @Override
             protected void onCollisionBegin(Entity player, Entity wall) {
                 player.translate(-10,0);
-                System.out.println("testetssts");
 //                player.removeFromWorld();
             }
         });
@@ -145,9 +151,18 @@ public class MapTest extends GameApplication{
                 var hp = player.getComponent(HealthIntComponent.class);
                 hp.damage(1);
 
+                Sound hurt = FXGL.getAssetLoader().loadSound("hurt.wav");
+                getAudioPlayer().playSound(hurt);
+
                 if (hp.isZero()){
+
+                    Sound death = FXGL.getAssetLoader().loadSound("Game_Over.wav");
+
+                    getAudioPlayer().playSound(death);
+
                     player.removeFromWorld();
-                    getGameController().gotoMainMenu();
+
+                    deathHandle();
                 }
             }
         });
@@ -180,6 +195,65 @@ public class MapTest extends GameApplication{
                 ball.removeFromWorld();
             }
         });
+    }
+
+
+    public void deathHandle() {
+        var title = texture("main-menu/title.png");
+
+        var gameOverText = new Text("Why soooo bad? :( ");
+
+        Button btnRestart = getUIFactoryService().newButton("Restart");
+        btnRestart.setOnMouseClicked(e -> getGameController().startNewGame());
+        btnRestart.setPrefWidth(300);
+
+        Button btnMainMenu = getUIFactoryService().newButton("Main Menu");
+        btnMainMenu.setOnMouseClicked(e -> getGameController().gotoMainMenu());
+        btnMainMenu.setPrefWidth(300);
+
+        Button btnExit = getUIFactoryService().newButton("Exit");
+        btnExit.setOnMouseClicked(e -> getGameController().exit());
+        btnExit.setPrefWidth(300);
+
+        VBox menuItems = new VBox(10,
+                title,
+                gameOverText,
+                btnMainMenu,
+                btnRestart,
+                btnExit
+        );
+
+        menuItems.setAlignment(Pos.CENTER);
+
+        getDialogService().showBox("GAME OVER, YOU DIED!", menuItems);
+    }
+    public void winHandle () {
+        var title = texture("main-menu/title.png");
+
+
+        Button btnRestart = getUIFactoryService().newButton("Restart");
+        btnRestart.setOnMouseClicked(e -> getGameController().startNewGame());
+        btnRestart.setPrefWidth(300);
+
+        Button btnMainMenu = getUIFactoryService().newButton("Main Menu");
+        btnMainMenu.setOnMouseClicked(e -> getGameController().gotoMainMenu());
+        btnMainMenu.setPrefWidth(300);
+
+        Button btnExit = getUIFactoryService().newButton("Exit");
+        btnExit.setOnMouseClicked(e -> getGameController().exit());
+        btnExit.setPrefWidth(300);
+
+        VBox menuItems = new VBox(10,
+                title,
+                btnMainMenu,
+                btnRestart,
+                btnExit
+        );
+
+
+        menuItems.setAlignment(Pos.CENTER);
+
+        getDialogService().showBox("YOU WON, HOPE U ENJOYED <3", menuItems);
     }
 
     protected void initUI(){
