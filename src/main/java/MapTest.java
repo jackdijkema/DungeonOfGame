@@ -267,25 +267,29 @@ public class MapTest extends GameApplication{
         myText.setTranslateY(50);
         myText.setScaleY(3);
         myText.setScaleX(3);
+        myText.setStyle("-fx-text-fill: white");
         myText.textProperty().bind(FXGL.getWorldProperties().intProperty("kills").asString());
 
         Label myText2 = new Label("Kills: ");
-        myText2.setTranslateX(600);
-        myText2.setTranslateY(700);
+        myText2.setTranslateX(370);
+        myText2.setTranslateY(50);
         myText2.setScaleY(3);
         myText2.setScaleX(3);
+        myText2.setStyle("-fx-text-fill: white");
 
         Label myText3 = new Label("Level: ");
-        myText3.setTranslateX(600);
-        myText3.setTranslateY(630);
+        myText3.setTranslateX(70);
+        myText3.setTranslateY(50);
         myText3.setScaleY(3);
         myText3.setScaleX(3);
+        myText3.setStyle("-fx-text-fill: white");
 
         Label myText4 = new Label("level");
-        myText4.setTranslateX(700);
-        myText4.setTranslateY(630);
+        myText4.setTranslateX(170);
+        myText4.setTranslateY(50);
         myText4.setScaleY(3);
         myText4.setScaleX(3);
+        myText4.setStyle("-fx-text-fill: white");
         myText4.textProperty().bind(FXGL.getWorldProperties().intProperty("level").asString());
 
         FXGL.getGameScene().addUINode(myText);
