@@ -27,8 +27,7 @@ public class MapTest extends GameApplication{
     private int currentLevel = 1;
     private int killCount = 0;
     private Entity player;
-    private Entity enemy;
-    private Entity enemy2;
+
     public enum EntityType {
         PLAYER, WALL, ENEMY, BALL
     }
@@ -43,7 +42,6 @@ public class MapTest extends GameApplication{
 
         settings.setTitle("Game Of Dungeon");
         settings.setMainMenuEnabled(true);
-
 
         settings.setSceneFactory(new SceneFactory() {
             @Override
@@ -228,11 +226,39 @@ public class MapTest extends GameApplication{
                 btnExit
         );
 
-
         menuItems.setAlignment(Pos.CENTER);
 
         getDialogService().showBox("GAME OVER, YOU DIED!", menuItems);
     }
+    public void winHandle () {
+        var title = texture("main-menu/title.png");
+
+
+        Button btnRestart = getUIFactoryService().newButton("Restart");
+        btnRestart.setOnMouseClicked(e -> getGameController().startNewGame());
+        btnRestart.setPrefWidth(300);
+
+        Button btnMainMenu = getUIFactoryService().newButton("Main Menu");
+        btnMainMenu.setOnMouseClicked(e -> getGameController().gotoMainMenu());
+        btnMainMenu.setPrefWidth(300);
+
+        Button btnExit = getUIFactoryService().newButton("Exit");
+        btnExit.setOnMouseClicked(e -> getGameController().exit());
+        btnExit.setPrefWidth(300);
+
+        VBox menuItems = new VBox(10,
+                title,
+                btnMainMenu,
+                btnRestart,
+                btnExit
+        );
+
+
+        menuItems.setAlignment(Pos.CENTER);
+
+        getDialogService().showBox("YOU WON, HOPE U ENJOYED <3", menuItems);
+    }
+
     protected void initUI(){
         Label myText = new Label("Kills");
         myText.setTranslateX(700);
