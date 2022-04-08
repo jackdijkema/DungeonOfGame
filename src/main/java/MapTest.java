@@ -112,7 +112,7 @@ public class MapTest extends GameApplication{
 
     @Override
     protected void initGame() {
-
+        killCount = 0;
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
@@ -183,7 +183,6 @@ public class MapTest extends GameApplication{
                 }
 
                 if (killCount == 10){
-                    killCount = 0;
                     if(currentLevel == 4){
                         winHandle();
                     } else {
@@ -237,6 +236,7 @@ public class MapTest extends GameApplication{
 
 
         Button btnRestart = getUIFactoryService().newButton("Restart");
+        currentLevel = 1;
         btnRestart.setOnMouseClicked(e -> getGameController().startNewGame());
         btnRestart.setPrefWidth(300);
 
