@@ -12,7 +12,7 @@ public class PlayerComponent extends Component {
 
     final int SHOOT_POS = 2;
     private PhysicsComponent physics;
-    private int speed = 80;
+    private int speed = 150;
     public void onUpdate(Entity entity, double tpf){
 
     }
