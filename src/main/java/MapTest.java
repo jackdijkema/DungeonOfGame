@@ -263,8 +263,8 @@ public class MapTest extends GameApplication{
 
     protected void initUI(){
         Label myText = new Label("Kills");
-        myText.setTranslateX(700);
-        myText.setTranslateY(700);
+        myText.setTranslateX(470);
+        myText.setTranslateY(50);
         myText.setScaleY(3);
         myText.setScaleX(3);
         myText.textProperty().bind(FXGL.getWorldProperties().intProperty("kills").asString());
