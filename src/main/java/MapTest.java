@@ -122,6 +122,7 @@ public class MapTest extends GameApplication{
         String levelPath = String.format("map_%s.tmx", currentLevel);
         Level currentLevelData = FXGL.setLevelFromMap(levelPath);
 
+
     }
 
     @Override
@@ -183,8 +184,12 @@ public class MapTest extends GameApplication{
 
                 if (killCount == 10){
                     killCount = 0;
-                    currentLevel += 1;
-                    getGameController().startNewGame();
+                    if(currentLevel == 4){
+                        winHandle();
+                    } else {
+                        currentLevel += 1;
+                        getGameController().startNewGame();
+                    }
                 }
             }
         });
