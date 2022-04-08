@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import java.util.Map;
-
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 
@@ -169,11 +168,19 @@ public class MapTest extends GameApplication{
                     FXGL.inc("kills", +1);
                     killCount += 1;
                 }
-
-                if (killCount == 2){
-                    killCount = 0;
-                    currentLevel += 1;
-                    getGameController().startNewGame();
+                if (currentLevel < 2) {
+                    if (killCount == 2) {
+                        killCount = 0;
+                        currentLevel += 1;
+                        getGameController().startNewGame();
+                    }
+                }
+                else{
+                    if (killCount == 2){
+                        getGameController().gotoMainMenu();
+                        killCount = 0;
+                        currentLevel = 1;
+                    }
                 }
             }
         });
