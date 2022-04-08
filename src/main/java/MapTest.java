@@ -18,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -139,7 +138,6 @@ public class MapTest extends GameApplication{
             @Override
             protected void onCollisionBegin(Entity player, Entity wall) {
                 player.translate(-10,0);
-                System.out.println("testetssts");
 //                player.removeFromWorld();
             }
         });
@@ -211,21 +209,15 @@ public class MapTest extends GameApplication{
         var gameOverText = new Text("Why soooo bad? :( ");
 
         Button btnRestart = getUIFactoryService().newButton("Restart");
-        btnRestart.setOnMouseClicked(e -> {
-            getGameController().startNewGame();
-        });
+        btnRestart.setOnMouseClicked(e -> getGameController().startNewGame());
         btnRestart.setPrefWidth(300);
 
         Button btnMainMenu = getUIFactoryService().newButton("Main Menu");
-        btnMainMenu.setOnMouseClicked(e -> {
-            getGameController().gotoMainMenu();
-        });
+        btnMainMenu.setOnMouseClicked(e -> getGameController().gotoMainMenu());
         btnMainMenu.setPrefWidth(300);
 
         Button btnExit = getUIFactoryService().newButton("Exit");
-        btnExit.setOnMouseClicked(e -> {
-            getGameController().exit();
-        });
+        btnExit.setOnMouseClicked(e -> getGameController().exit());
         btnExit.setPrefWidth(300);
 
         VBox menuItems = new VBox(10,

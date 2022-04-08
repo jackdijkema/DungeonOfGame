@@ -34,7 +34,7 @@ public class TestFactory implements EntityFactory{
     public Entity newPlayer(SpawnData data){
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        int hp = 10;
+        int hp = 3;
 
         return entityBuilder(data)
                 .type(MapTest.EntityType.PLAYER)
@@ -53,7 +53,7 @@ public class TestFactory implements EntityFactory{
     public Entity newEnemy(SpawnData data){
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        int hp = 3;
+        int hp = 4;
 
         return entityBuilder(data)
                 .type(MapTest.EntityType.ENEMY)
