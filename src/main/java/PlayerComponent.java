@@ -1,5 +1,3 @@
-
-
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.ProjectileComponent;
 import com.almasb.fxgl.entity.Entity;
@@ -14,7 +12,7 @@ public class PlayerComponent extends Component {
 
     final int SHOOT_POS = 2;
     private PhysicsComponent physics;
-    private int speed = 80;
+    private int speed = 150;
     public void onUpdate(Entity entity, double tpf){
 
     }
@@ -56,7 +54,6 @@ public class PlayerComponent extends Component {
         FXGL.entityBuilder()
             .at((player.getX() + player.getRightX()) / SHOOT_POS, (player.getY() + player.getBottomY()) / SHOOT_POS)
             .viewWithBBox(new Circle(5, Color.ORANGE))
-            //.viewWithBBox("player/vuur.png")
             .with(new ProjectileComponent(direction, 500))
             .with(new CollidableComponent(true))
             .type(MapTest.EntityType.BALL)

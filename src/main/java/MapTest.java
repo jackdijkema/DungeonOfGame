@@ -27,7 +27,6 @@ public class MapTest extends GameApplication{
     private int currentLevel = 1;
     private int killCount = 0;
     private Entity player;
-
     public enum EntityType {
         PLAYER, WALL, ENEMY, BALL
     }
@@ -117,13 +116,12 @@ public class MapTest extends GameApplication{
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
-        FXGL.getGameWorld().spawn("enemy", 200, 200);
-        FXGL.getGameWorld().spawn("enemy", 200, 240);
     }
 
     private void setLevel() {
         String levelPath = String.format("map_%s.tmx", currentLevel);
         Level currentLevelData = FXGL.setLevelFromMap(levelPath);
+
 
     }
 
@@ -184,10 +182,14 @@ public class MapTest extends GameApplication{
                     killCount += 1;
                 }
 
-                if (killCount == 2){
+                if (killCount == 10){
                     killCount = 0;
-                    currentLevel += 1;
-                    getGameController().startNewGame();
+                    if(currentLevel == 4){
+                        winHandle();
+                    } else {
+                        currentLevel += 1;
+                        getGameController().startNewGame();
+                    }
                 }
             }
         });

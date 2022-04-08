@@ -34,10 +34,4 @@ public class HealthBarShowComponent extends ChildViewComponent {
         hpBar.currentValueProperty().bind(health.valueProperty());
     }
 
-//    @Override
-//    public void onUpdate(double tpf) {
-//        super.onUpdate(tpf);
-//
-//
-//    }
 }
