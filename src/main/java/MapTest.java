@@ -18,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -28,8 +27,6 @@ public class MapTest extends GameApplication{
     private int currentLevel = 1;
     private int killCount = 0;
     private Entity player;
-    private Entity enemy;
-    private Entity enemy2;
     public enum EntityType {
         PLAYER, WALL, ENEMY, BALL
     }
@@ -38,11 +35,12 @@ public class MapTest extends GameApplication{
     protected void initSettings(GameSettings settings) {
         settings.setWidth(1920);
         settings.setHeight(1080);
+        settings.setFullScreenAllowed(true);
+        settings.setFullScreenFromStart(true);
         settings.setVersion("1.0");
 
         settings.setTitle("Game Of Dungeon");
         settings.setMainMenuEnabled(true);
-
 
         settings.setSceneFactory(new SceneFactory() {
             @Override
@@ -114,23 +112,31 @@ public class MapTest extends GameApplication{
 
     @Override
     protected void initGame() {
-
+        killCount = 0;
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
-        FXGL.getGameWorld().spawn("enemy", 200, 200);
-        FXGL.getGameWorld().spawn("enemy", 200, 240);
     }
 
     private void setLevel() {
         String levelPath = String.format("map_%s.tmx", currentLevel);
         Level currentLevelData = FXGL.setLevelFromMap(levelPath);
 
+
     }
 
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0,0);
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.WALL) {
+
+            // order of types is the same as passed into the constructor
+            @Override
+            protected void onCollisionBegin(Entity player, Entity wall) {
+                player.translate(-10,0);
+//                player.removeFromWorld();
+            }
+        });
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
             @Override
             protected void onCollisionBegin(Entity enemy, Entity wall) {
@@ -176,10 +182,13 @@ public class MapTest extends GameApplication{
                     killCount += 1;
                 }
 
-                if (killCount == 2){
-                    killCount = 0;
-                    currentLevel += 1;
-                    getGameController().startNewGame();
+                if (killCount == 10){
+                    if(currentLevel == 4){
+                        winHandle();
+                    } else {
+                        currentLevel += 1;
+                        getGameController().startNewGame();
+                    }
                 }
             }
         });
@@ -199,21 +208,15 @@ public class MapTest extends GameApplication{
         var gameOverText = new Text("Why soooo bad? :( ");
 
         Button btnRestart = getUIFactoryService().newButton("Restart");
-        btnRestart.setOnMouseClicked(e -> {
-            getGameController().startNewGame();
-        });
+        btnRestart.setOnMouseClicked(e -> getGameController().startNewGame());
         btnRestart.setPrefWidth(300);
 
         Button btnMainMenu = getUIFactoryService().newButton("Main Menu");
-        btnMainMenu.setOnMouseClicked(e -> {
-            getGameController().gotoMainMenu();
-        });
+        btnMainMenu.setOnMouseClicked(e -> getGameController().gotoMainMenu());
         btnMainMenu.setPrefWidth(300);
 
         Button btnExit = getUIFactoryService().newButton("Exit");
-        btnExit.setOnMouseClicked(e -> {
-            getGameController().exit();
-        });
+        btnExit.setOnMouseClicked(e -> getGameController().exit());
         btnExit.setPrefWidth(300);
 
         VBox menuItems = new VBox(10,
@@ -224,36 +227,69 @@ public class MapTest extends GameApplication{
                 btnExit
         );
 
-
         menuItems.setAlignment(Pos.CENTER);
 
         getDialogService().showBox("GAME OVER, YOU DIED!", menuItems);
     }
+    public void winHandle () {
+        var title = texture("main-menu/title.png");
+
+
+        Button btnRestart = getUIFactoryService().newButton("Restart");
+        currentLevel = 1;
+        btnRestart.setOnMouseClicked(e -> getGameController().startNewGame());
+        btnRestart.setPrefWidth(300);
+
+        Button btnMainMenu = getUIFactoryService().newButton("Main Menu");
+        btnMainMenu.setOnMouseClicked(e -> getGameController().gotoMainMenu());
+        btnMainMenu.setPrefWidth(300);
+
+        Button btnExit = getUIFactoryService().newButton("Exit");
+        btnExit.setOnMouseClicked(e -> getGameController().exit());
+        btnExit.setPrefWidth(300);
+
+        VBox menuItems = new VBox(10,
+                title,
+                btnMainMenu,
+                btnRestart,
+                btnExit
+        );
+
+
+        menuItems.setAlignment(Pos.CENTER);
+
+        getDialogService().showBox("YOU WON, HOPE U ENJOYED <3", menuItems);
+    }
+
     protected void initUI(){
         Label myText = new Label("Kills");
-        myText.setTranslateX(700);
-        myText.setTranslateY(700);
+        myText.setTranslateX(470);
+        myText.setTranslateY(50);
         myText.setScaleY(3);
         myText.setScaleX(3);
+        myText.setStyle("-fx-text-fill: white");
         myText.textProperty().bind(FXGL.getWorldProperties().intProperty("kills").asString());
 
         Label myText2 = new Label("Kills: ");
-        myText2.setTranslateX(600);
-        myText2.setTranslateY(700);
+        myText2.setTranslateX(370);
+        myText2.setTranslateY(50);
         myText2.setScaleY(3);
         myText2.setScaleX(3);
+        myText2.setStyle("-fx-text-fill: white");
 
         Label myText3 = new Label("Level: ");
-        myText3.setTranslateX(600);
-        myText3.setTranslateY(630);
+        myText3.setTranslateX(70);
+        myText3.setTranslateY(50);
         myText3.setScaleY(3);
         myText3.setScaleX(3);
+        myText3.setStyle("-fx-text-fill: white");
 
         Label myText4 = new Label("level");
-        myText4.setTranslateX(700);
-        myText4.setTranslateY(630);
+        myText4.setTranslateX(170);
+        myText4.setTranslateY(50);
         myText4.setScaleY(3);
         myText4.setScaleX(3);
+        myText4.setStyle("-fx-text-fill: white");
         myText4.textProperty().bind(FXGL.getWorldProperties().intProperty("level").asString());
 
         FXGL.getGameScene().addUINode(myText);

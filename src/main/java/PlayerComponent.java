@@ -1,5 +1,3 @@
-
-
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.ProjectileComponent;
 import com.almasb.fxgl.entity.Entity;
@@ -18,6 +16,7 @@ import java.awt.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.image;
 
 public class PlayerComponent extends Component {
+
     final int SHOOT_POS = 2;
 
     private PhysicsComponent physics;
@@ -32,6 +31,8 @@ public class PlayerComponent extends Component {
         animIdle = new AnimationChannel(image("Character_Down.png"), 4, 128/4, 42, Duration.seconds(1), 1, 1);
         animWalk = new AnimationChannel(image("Character_Right.png"), 4, 128/4, 42, Duration.seconds(0.66), 0, 3);
         animWalk2 = new AnimationChannel(image("Character_Left.png"), 4, 128/4, 42, Duration.seconds(0.66), 0, 3);
+        private int speed = 150;
+        public void onUpdate(Entity entity, double tpf){
 
         texture = new AnimatedTexture(animIdle);
         texture.loop();
@@ -66,7 +67,7 @@ public class PlayerComponent extends Component {
     }
 
     public void left(){
-        physics.setVelocityX(-100);
+        physics.setVelocityX(-speed);
     }
 
     public void leftEnd(){
@@ -74,7 +75,7 @@ public class PlayerComponent extends Component {
     }
 
     public void right(){
-        physics.setVelocityX(100);
+        physics.setVelocityX(speed);
     }
 
     public void rightEnd(){
@@ -82,7 +83,7 @@ public class PlayerComponent extends Component {
     }
 
     public void up(){
-        physics.setVelocityY(-100);
+        physics.setVelocityY(-speed);
     }
 
     public void upEnd(){
@@ -90,7 +91,7 @@ public class PlayerComponent extends Component {
     }
 
     public void down(){
-        physics.setVelocityY(100);
+        physics.setVelocityY(speed);
    }
 
     public void downEnd(){
@@ -102,7 +103,6 @@ public class PlayerComponent extends Component {
         FXGL.entityBuilder()
             .at((player.getX() + player.getRightX()) / SHOOT_POS, (player.getY() + player.getBottomY()) / SHOOT_POS)
             .viewWithBBox(new Circle(5, Color.ORANGE))
-            //.viewWithBBox("player/vuur.png")
             .with(new ProjectileComponent(direction, 500))
             .with(new CollidableComponent(true))
             .type(MapTest.EntityType.BALL)
