@@ -38,8 +38,6 @@ public class MapTest extends GameApplication{
     protected void initSettings(GameSettings settings) {
         settings.setWidth(1920);
         settings.setHeight(1080);
-        settings.setFullScreenAllowed(true);
-        settings.setFullScreenFromStart(true);
         settings.setVersion("1.0");
 
         settings.setTitle("Game Of Dungeon");
@@ -133,16 +131,6 @@ public class MapTest extends GameApplication{
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0,0);
-        getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.PLAYER, EntityType.WALL) {
-
-            // order of types is the same as passed into the constructor
-            @Override
-            protected void onCollisionBegin(Entity player, Entity wall) {
-                player.translate(-10,0);
-                System.out.println("testetssts");
-//                player.removeFromWorld();
-            }
-        });
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.ENEMY, EntityType.WALL) {
             @Override
             protected void onCollisionBegin(Entity enemy, Entity wall) {
