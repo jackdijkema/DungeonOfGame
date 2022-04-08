@@ -117,10 +117,6 @@ public class MapTest extends GameApplication{
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
-
-        Sound gamesound = FXGL.getAssetLoader().loadSound("gamesound.wav");
-        getAudioPlayer().stopAllSounds();
-        getAudioPlayer().playSound(gamesound);
     }
 
     private void setLevel() {
