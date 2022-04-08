@@ -208,6 +208,7 @@ public class MapTest extends GameApplication{
         var gameOverText = new Text("Why soooo bad? :( ");
 
         Button btnRestart = getUIFactoryService().newButton("Restart");
+        currentLevel = 1;
         btnRestart.setOnMouseClicked(e -> getGameController().startNewGame());
         btnRestart.setPrefWidth(300);
 
