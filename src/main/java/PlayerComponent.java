@@ -11,8 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-import java.awt.*;
-
 import static com.almasb.fxgl.dsl.FXGLForKtKt.image;
 
 public class PlayerComponent extends Component {
@@ -23,17 +21,15 @@ public class PlayerComponent extends Component {
 
     private AnimatedTexture texture;
 
-    private AnimationChannel animIdle, animWalk, animWalk2;
-
+    private AnimationChannel animIdle, animWalk, animWalk2, animIdle2;
+    private int speed = 150;
     private int jumps = 2;
 
     public PlayerComponent() {
         animIdle = new AnimationChannel(image("Character_Down.png"), 4, 128/4, 42, Duration.seconds(1), 1, 1);
+        animIdle2 = new AnimationChannel(image("Character_Up.png"), 4, 128/4, 42, Duration.seconds(1), 1, 1);
         animWalk = new AnimationChannel(image("Character_Right.png"), 4, 128/4, 42, Duration.seconds(0.66), 0, 3);
         animWalk2 = new AnimationChannel(image("Character_Left.png"), 4, 128/4, 42, Duration.seconds(0.66), 0, 3);
-        private int speed = 150;
-        public void onUpdate(Entity entity, double tpf){
-
         texture = new AnimatedTexture(animIdle);
         texture.loop();
     }
@@ -53,9 +49,19 @@ public class PlayerComponent extends Component {
                 }
             }
             else{
-                if (texture.getAnimationChannel() != animIdle) {
-                    texture.loopAnimationChannel(animIdle);
+                if(physics.getVelocityY() > 0.0d){
+                    if (texture.getAnimationChannel() != animIdle) {
+                        texture.loopAnimationChannel(animIdle);
+                    }
                 }
+                else{
+                    if (physics.getVelocityY() < 0.0d) {
+                        if(texture.getAnimationChannel() != animIdle2){
+                            texture.loopAnimationChannel(animIdle2);
+                        }
+                    }
+                }
+
             }
         }
     }
