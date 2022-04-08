@@ -2,6 +2,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.SceneFactory;
+import com.almasb.fxgl.audio.AudioPlayer;
 import com.almasb.fxgl.audio.Sound;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
@@ -116,6 +117,10 @@ public class MapTest extends GameApplication{
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
+
+        Sound gamesound = FXGL.getAssetLoader().loadSound("gamesound.wav");
+        getAudioPlayer().stopAllSounds();
+        getAudioPlayer().playSound(gamesound);
     }
 
     private void setLevel() {
@@ -157,9 +162,7 @@ public class MapTest extends GameApplication{
 
                 if (hp.isZero()){
 
-                    Sound death = FXGL.getAssetLoader().loadSound("Game_Over.wav");
 
-                    getAudioPlayer().playSound(death);
 
                     player.removeFromWorld();
 
@@ -219,6 +222,11 @@ public class MapTest extends GameApplication{
         btnExit.setOnMouseClicked(e -> getGameController().exit());
         btnExit.setPrefWidth(300);
 
+        getAudioPlayer().stopAllSounds();
+
+        Sound death = FXGL.getAssetLoader().loadSound("Game_Over.wav");
+        getAudioPlayer().playSound(death);
+
         VBox menuItems = new VBox(10,
                 title,
                 gameOverText,
@@ -255,6 +263,10 @@ public class MapTest extends GameApplication{
                 btnExit
         );
 
+        getAudioPlayer().stopAllSounds();
+
+        Sound win = FXGL.getAssetLoader().loadSound("victory.wav");
+        getAudioPlayer().playSound(win);
 
         menuItems.setAlignment(Pos.CENTER);
 
@@ -296,11 +308,16 @@ public class MapTest extends GameApplication{
         FXGL.getGameScene().addUINode(myText2);
         FXGL.getGameScene().addUINode(myText3);
         FXGL.getGameScene().addUINode(myText4);
+
+
     }
 
     protected void initGameVars(Map<String, Object> vars){
         vars.put("kills", 0);
         vars.put("level", currentLevel);
+
+
+
     }
 
     public static void main(String[] args) {
