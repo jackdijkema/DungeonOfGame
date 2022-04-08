@@ -8,12 +8,9 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-
-import java.awt.*;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -23,8 +20,6 @@ public class MapTest extends GameApplication{
     private int currentLevel = 1;
     private int killCount = 0;
     private Entity player;
-    private Entity enemy;
-    private Entity enemy2;
     public enum EntityType {
         PLAYER, WALL, ENEMY, BALL
     }
@@ -114,8 +109,6 @@ public class MapTest extends GameApplication{
         FXGL.getGameWorld().addEntityFactory(new TestFactory());
         setLevel();
         player = FXGL.getGameWorld().spawn("player", 50, 50);
-        FXGL.getGameWorld().spawn("enemy", 200, 200);
-        FXGL.getGameWorld().spawn("enemy", 200, 240);
     }
 
     private void setLevel() {
@@ -173,7 +166,7 @@ public class MapTest extends GameApplication{
                     killCount += 1;
                 }
 
-                if (killCount == 2){
+                if (killCount == 10){
                     killCount = 0;
                     currentLevel += 1;
                     getGameController().startNewGame();
