@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" nextobjectid="34">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="34">
  <tileset firstgid="1" name="tileset1" tilewidth="32" tileheight="32" tilecount="483" columns="23">
-  <image source="../../IdeaProjects/pacman-se33/src/main/resources/assets/levels/tileset1.png" width="736" height="672"/>
+  <image source="tileset1.png" width="736" height="672"/>
  </tileset>
- <layer name="Tilelaag 1" width="60" height="34">
+ <layer id="1" name="Tilelaag 1" width="60" height="34">
   <data encoding="csv">
 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
 30,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,30,240,240,240,240,240,240,240,240,240,30,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,240,30,
@@ -41,7 +41,7 @@
 30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30
 </data>
  </layer>
- <objectgroup name="Objectlaag 1">
+ <objectgroup id="2" name="Objectlaag 1">
   <object id="1" name="wall" type="wall" x="0" y="0" width="32" height="1088"/>
   <object id="3" name="wall" type="wall" x="32" y="0" width="1890" height="36"/>
   <object id="7" name="wall" type="wall" x="1888" y="32" width="32" height="1056"/>
@@ -49,7 +49,6 @@
   <object id="11" name="wall" type="wall" x="288" y="288" width="32" height="768"/>
   <object id="13" name="wall" type="wall" x="832" y="32" width="32" height="544"/>
   <object id="14" name="wall" type="wall" x="1408" y="416" width="32" height="640"/>
-  <object id="15" name="player" type="player" x="128" y="864" width="32" height="32"/>
   <object id="16" name="enemy" type="enemy" x="224" y="96" width="32" height="32"/>
   <object id="17" name="enemy" type="enemy" x="800" y="832" width="32" height="32"/>
   <object id="18" name="enemy" type="enemy" x="1632" y="448" width="32" height="32"/>
