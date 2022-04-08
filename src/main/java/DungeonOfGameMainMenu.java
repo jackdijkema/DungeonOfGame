@@ -38,9 +38,9 @@ public class DungeonOfGameMainMenu extends FXGLMenu {
         title.setTranslateY(getAppHeight() / 6.0);
         title.setTranslateX((getAppWidth() - title.getWidth())/ 2 + (35 / 2.00));
 
-        // Center Menu TODO: Center better
-        menuItems.setTranslateX(800);
-        menuItems.setTranslateY(450);
+        // Center Menu items
+        menuItems.setTranslateX(getAppWidth() / 3.25 + getAppWidth() / 6.0 - 180);
+        menuItems.setTranslateY(getAppHeight() / 3.0);
 
         // Menu TEXT ALIGNMENT
         menuItems.setAlignment(Pos.CENTER);
